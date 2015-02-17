@@ -1,0 +1,37 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': 'Juzgado'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+
+{% block page %}
+<h1>{{ 'views.new.creation'|trans({'%entity%': 'Juzgado'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+
+<form class="well" action="{{ path('juzgado_create') }}" method="post" {{ form_enctype(form) }}>
+ <!--modificar el tipo de dato de un campo del formulario en este caso direccion a lo que se ponga en lugar de text dentro de default('')-->   
+    {% form_theme form _self %}
+
+    {% block _marlene_actasbundle_juzgado_direccion_widget %}
+            {% set type = type|default('text') %}
+            {{ block('form_widget_simple') }}
+
+    {% endblock %}
+
+
+
+            {{ form_widget(form) }}
+
+    <p>
+        <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+    </p>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('juzgado') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+</div>
+{% endblock %}
