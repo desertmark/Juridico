@@ -50,7 +50,7 @@ class Cliente
     private $domicilio;
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="Telefono", type="bigint")
      */

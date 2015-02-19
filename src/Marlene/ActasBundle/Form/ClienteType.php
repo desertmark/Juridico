@@ -11,12 +11,12 @@ class ClienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dNI')
+            ->add('dNI','number', array('label'=>'DNI'))
             ->add('apellido')
             ->add('nombre')
             ->add('domicilio')
-            ->add('telefono')
-            ->add('email')
+            ->add('telefono','text')
+            ->add('email','email')
         ;
     }
 

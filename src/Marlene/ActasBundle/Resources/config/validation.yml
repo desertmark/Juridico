@@ -2,8 +2,8 @@ Marlene\ActasBundle\Entity\Abogado:
     properties:
         cUIT:
             - Range:
-                min: 100000000000
-                max: 999999999999
+                min: 10000000000
+                max: 99999999999
                 minMessage: El cuit ser mayor a {{ limit }}
                 maxMessage: El cuit debe ser menor a {{ limit }}
 
