@@ -220,5 +220,25 @@ button:hover,input[type="button"]:hover
 .records_list>tbody>tr>td>ul>li>a{color:#0af;}
 
 
+/***Estilos de Actas new***/
+.checkLbl{font-size: 18px;}
+.hr{
+	border-color:#ddd;
+	border-style: inset;
+	border-width: 1px
+}
+
+
+.subtitulo
+{
+	float:left;
+	font-size:18px; 
+}
+
+.seccionForm
+{
+	width:500px;
+	margin-left:7%;
+}
 
 

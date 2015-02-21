@@ -15,6 +15,9 @@ use Marlene\ActasBundle\Entity\Cliente;
 use Marlene\ActasBundle\Form\ClienteType;
 use Marlene\ActasBundle\Form\ClienteFilterType;
 
+use Marlene\ActasBundle\Entity\Actas;
+use Marlene\ActasBundle\Form\ActasType;
+use Marlene\ActasBundle\Form\ActasFilterType;
 /**
  * Cliente controller.
  *
@@ -22,6 +25,31 @@ use Marlene\ActasBundle\Form\ClienteFilterType;
  */
 class ClienteController extends Controller
 {
+
+    /**
+     *Lista todas las actas del cliente
+     *
+     *@Route("/actas/{id}", name="cliente_actas")
+     */
+    public function listarActasDeCliente($id)
+    {
+
+        $repository = $this->getDoctrine()->getRepository("MarleneActasBundle:Cliente");
+        $cliente = $repository->find($id);
+        $actas = $cliente->getActas();
+
+        /*Elementos de filtro*/
+        list($filterForm, $queryBuilder) = $this->filterActas();
+        list($entities, $pagerHtml) = $this->paginatorActas($queryBuilder);
+
+        return $this->render('MarleneActasBundle:Cliente:cliente_actas.html.twig', array(
+            'cliente'=>$cliente,
+            'entities' => $actas,
+            'pagerHtml' => $pagerHtml,
+            'filterForm' => $filterForm->createView()
+            ));
+    }
+
     /**
      * Lists all Cliente entities.
      *
@@ -293,5 +321,81 @@ class ClienteController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+
+    /*filtros de actas para mostrar las actas de un cliente*/
+
+    /**
+    * Create filter form and process filter request.
+    *
+    */
+    protected function filterActas()
+    {
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $filterForm = $this->createForm(new ActasFilterType());
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository('MarleneActasBundle:Actas')->createQueryBuilder('e');
+
+        // Reset filter
+        if ($request->get('filter_action') == 'reset') {
+            $session->remove('ActasControllerFilter');
+        }
+
+        // Filter action
+        if ($request->get('filter_action') == 'filter') {
+            // Bind values from the request
+            $filterForm->bind($request);
+
+            if ($filterForm->isValid()) {
+                // Build the query from the given form object
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+                // Save filter to session
+                $filterData = $filterForm->getData();
+                $session->set('ActasControllerFilter', $filterData);
+            }
+        } else {
+            // Get filter from session
+            if ($session->has('ActasControllerFilter')) {
+                $filterData = $session->get('ActasControllerFilter');
+                $filterForm = $this->createForm(new ActasFilterType(), $filterData);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+            }
+        }
+
+        return array($filterForm, $queryBuilder);
+    }
+
+    /**
+    * Get results from paginator and get paginator view.
+    *
+    */
+    protected function paginatorActas($queryBuilder)
+    {
+        // Paginator
+        $adapter = new DoctrineORMAdapter($queryBuilder);
+        $pagerfanta = new Pagerfanta($adapter);
+        $currentPage = $this->getRequest()->get('page', 1);
+        $pagerfanta->setCurrentPage($currentPage);
+        $entities = $pagerfanta->getCurrentPageResults();
+
+        // Paginator - route generator
+        $me = $this;
+        $routeGenerator = function($page) use ($me)
+        {
+            return $me->generateUrl('actas', array('page' => $page));
+        };
+
+        // Paginator - view
+        $translator = $this->get('translator');
+        $view = new TwitterBootstrapView();
+        $pagerHtml = $view->render($pagerfanta, $routeGenerator, array(
+            'proximity' => 3,
+            'prev_message' => $translator->trans('views.index.pagprev', array(), 'JordiLlonchCrudGeneratorBundle'),
+            'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
+        ));
+
+        return array($entities, $pagerHtml);
     }
 }

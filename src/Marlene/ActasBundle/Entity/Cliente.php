@@ -3,7 +3,7 @@
 namespace Marlene\ActasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Cliente
  *
@@ -62,6 +62,19 @@ class Cliente
      * @ORM\Column(name="Email", type="string", length=255)
      */
     private $email;
+
+    /**
+    * 
+    * 
+    * @ORM\OneToMany(targetEntity="Actas", mappedBy="cliente")
+    */
+    private $actas;
+
+
+    public function __construct()
+    {
+        $this->actas = new ArrayCollection();
+    }
 
 
     /**
@@ -210,5 +223,49 @@ class Cliente
     public function getEmail()
     {
         return $this->email;
+    }
+
+
+    /**
+     * Devuelve nombreCliente(DNI)
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return ''.$this->nombre.' '.$this->apellido.'('.$this->dNI.')';
+    }
+
+    /**
+     * Add actas
+     *
+     * @param \Marlene\ActasBundle\Entity\Actas $actas
+     * @return Cliente
+     */
+    public function addActa(\Marlene\ActasBundle\Entity\Actas $actas)
+    {
+        $this->actas[] = $actas;
+
+        return $this;
+    }
+
+    /**
+     * Remove actas
+     *
+     * @param \Marlene\ActasBundle\Entity\Actas $actas
+     */
+    public function removeActa(\Marlene\ActasBundle\Entity\Actas $actas)
+    {
+        $this->actas->removeElement($actas);
+    }
+
+    /**
+     * Get actas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActas()
+    {
+        return $this->actas;
     }
 }

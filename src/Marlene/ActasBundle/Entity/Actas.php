@@ -35,18 +35,19 @@ class Actas
     private $fecha;
 
     /**
-     * @var \stdClass
+     * @var \Abogado
      *
-     * @ORM\Column(name="abogado", type="object")
+     * @ORM\ManyToOne(targetEntity="Abogado")
      */
     private $abogado;
 
     /**
-     * @var \stdClass
+     * @var \Abogado
      *
-     * @ORM\Column(name="creador", type="object")
+     * @ORM\ManyToOne(targetEntity="Abogado")
+     *
      */
-    private $creador;
+    private $abogadoContraparte;
 
     /**
      * @var string
@@ -60,6 +61,20 @@ class Actas
     */
     private $juzgado;
 
+    /**
+     *
+     *@ORM\OneToMany(targetEntity="Comentarios", mappedBy="acta")
+     */
+    private $comentarios;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="actuacion", type="text")
+     */
+    private $actuacion;
+
+
 
     /**
      * Get id
@@ -71,28 +86,7 @@ class Actas
         return $this->id;
     }
 
-    /**
-     * Set cliente
-     *
-     * @param \stdClass $cliente
-     * @return Actas
-     */
-    public function setCliente($cliente)
-    {
-        $this->cliente = $cliente;
 
-        return $this;
-    }
-
-    /**
-     * Get cliente
-     *
-     * @return \stdClass 
-     */
-    public function getCliente()
-    {
-        return $this->cliente;
-    }
 
     /**
      * Set detalle
@@ -140,13 +134,78 @@ class Actas
         return $this->fecha;
     }
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comentarios
+     *
+     * @param \Marlene\ActasBundle\Entity\Comentarios $comentarios
+     * @return Actas
+     */
+    public function addComentario(\Marlene\ActasBundle\Entity\Comentarios $comentarios)
+    {
+        $this->comentarios[] = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentarios
+     *
+     * @param \Marlene\ActasBundle\Entity\Comentarios $comentarios
+     */
+    public function removeComentario(\Marlene\ActasBundle\Entity\Comentarios $comentarios)
+    {
+        $this->comentarios->removeElement($comentarios);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * Set cliente
+     *
+     * @param \Marlene\ActasBundle\Entity\Cliente $cliente
+     * @return Actas
+     */
+    public function setCliente(\Marlene\ActasBundle\Entity\Cliente $cliente = null)
+    {
+        $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    /**
+     * Get cliente
+     *
+     * @return \Marlene\ActasBundle\Entity\Cliente 
+     */
+    public function getCliente()
+    {
+        return $this->cliente;
+    }
+
     /**
      * Set abogado
      *
-     * @param \stdClass $abogado
+     * @param \Marlene\ActasBundle\Entity\Abogado $abogado
      * @return Actas
      */
-    public function setAbogado($abogado)
+    public function setAbogado(\Marlene\ActasBundle\Entity\Abogado $abogado = null)
     {
         $this->abogado = $abogado;
 
@@ -156,7 +215,7 @@ class Actas
     /**
      * Get abogado
      *
-     * @return \stdClass 
+     * @return \Marlene\ActasBundle\Entity\Abogado 
      */
     public function getAbogado()
     {
@@ -164,30 +223,35 @@ class Actas
     }
 
     /**
-     * Set creador
+     * Set abogadoContraparte
      *
-     * @param \stdClass $creador
+     * @param \Marlene\ActasBundle\Entity\Abogado $abogadoContraparte
      * @return Actas
      */
-    public function setCreador($creador)
+    public function setAbogadoContraparte(\Marlene\ActasBundle\Entity\Abogado $abogadoContraparte = null)
     {
-        $this->creador = $creador;
+        $this->abogadoContraparte = $abogadoContraparte;
 
         return $this;
     }
 
     /**
-     * Get creador
+     * Get abogadoContraparte
      *
-     * @return \stdClass 
+     * @return \Marlene\ActasBundle\Entity\Abogado 
      */
-    public function getCreador()
+    public function getAbogadoContraparte()
     {
-        return $this->creador;
+        return $this->abogadoContraparte;
     }
 
-
-    public function setJuzgado($juzgado)
+    /**
+     * Set juzgado
+     *
+     * @param \Marlene\ActasBundle\Entity\Juzgado $juzgado
+     * @return Actas
+     */
+    public function setJuzgado(\Marlene\ActasBundle\Entity\Juzgado $juzgado = null)
     {
         $this->juzgado = $juzgado;
 
@@ -197,10 +261,33 @@ class Actas
     /**
      * Get juzgado
      *
-     * @return \Juzgado 
+     * @return \Marlene\ActasBundle\Entity\Juzgado 
      */
     public function getJuzgado()
     {
         return $this->juzgado;
+    }
+
+    /**
+     * Set actuacion
+     *
+     * @param string $actuacion
+     * @return Actas
+     */
+    public function setActuacion($actuacion)
+    {
+        $this->actuacion = $actuacion;
+
+        return $this;
+    }
+
+    /**
+     * Get actuacion
+     *
+     * @return string 
+     */
+    public function getActuacion()
+    {
+        return $this->actuacion;
     }
 }

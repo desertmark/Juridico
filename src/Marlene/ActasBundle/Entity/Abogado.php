@@ -181,4 +181,12 @@ class Abogado
     {
         return $this->email;
     }
+    /**
+     *
+     */
+
+    public function __toString()
+    {
+        return ''.$this->nombre.' '.$this->apellido.'('.$this->cUIT.')';
+    }
 }

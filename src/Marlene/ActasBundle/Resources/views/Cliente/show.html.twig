@@ -35,6 +35,12 @@
 
 <div>
     <div class="float-left">
+        <a class="btn" href="{{ path('cliente_actas', { 'id': entity.id }) }}">
+            Mostrar Actas
+        </a>
+    </div>
+
+    <div class="float-left">
         <a class="btn" href="{{ path('cliente') }}">
             {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>

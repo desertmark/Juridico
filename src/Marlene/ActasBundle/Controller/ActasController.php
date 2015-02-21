@@ -7,8 +7,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\View\TwitterBootstrapView;
+
 use Marlene\ActasBundle\Entity\Actas;
 use Marlene\ActasBundle\Form\ActasType;
+use Marlene\ActasBundle\Form\ActasFilterType;
+
+use Marlene\ActasBundle\Entity\Cliente;
+use Marlene\ActasBundle\Form\ClienteType;
+use Marlene\ActasBundle\Form\ClienteFilterType;
+
+use Marlene\ActasBundle\Entity\Abogado;
+use Marlene\ActasBundle\Form\AbogadoType;
+use Marlene\ActasBundle\Form\AbogadoFilterType;
+
 
 /**
  * Actas controller.
@@ -17,7 +31,6 @@ use Marlene\ActasBundle\Form\ActasType;
  */
 class ActasController extends Controller
 {
-
     /**
      * Lists all Actas entities.
      *
@@ -27,14 +40,90 @@ class ActasController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        list($filterForm, $queryBuilder) = $this->filter();
 
-        $entities = $em->getRepository('MarleneActasBundle:Actas')->findAll();
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
 
         return array(
             'entities' => $entities,
+            'pagerHtml' => $pagerHtml,
+            'filterForm' => $filterForm->createView(),
         );
     }
+
+    /**
+    * Create filter form and process filter request.
+    *
+    */
+    protected function filter()
+    {
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $filterForm = $this->createForm(new ActasFilterType());
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository('MarleneActasBundle:Actas')->createQueryBuilder('e');
+
+        // Reset filter
+        if ($request->get('filter_action') == 'reset') {
+            $session->remove('ActasControllerFilter');
+        }
+
+        // Filter action
+        if ($request->get('filter_action') == 'filter') {
+            // Bind values from the request
+            $filterForm->bind($request);
+
+            if ($filterForm->isValid()) {
+                // Build the query from the given form object
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+                // Save filter to session
+                $filterData = $filterForm->getData();
+                $session->set('ActasControllerFilter', $filterData);
+            }
+        } else {
+            // Get filter from session
+            if ($session->has('ActasControllerFilter')) {
+                $filterData = $session->get('ActasControllerFilter');
+                $filterForm = $this->createForm(new ActasFilterType(), $filterData);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+            }
+        }
+
+        return array($filterForm, $queryBuilder);
+    }
+
+    /**
+    * Get results from paginator and get paginator view.
+    *
+    */
+    protected function paginator($queryBuilder)
+    {
+        // Paginator
+        $adapter = new DoctrineORMAdapter($queryBuilder);
+        $pagerfanta = new Pagerfanta($adapter);
+        $currentPage = $this->getRequest()->get('page', 1);
+        $pagerfanta->setCurrentPage($currentPage);
+        $entities = $pagerfanta->getCurrentPageResults();
+
+        // Paginator - route generator
+        $me = $this;
+        $routeGenerator = function($page) use ($me)
+        {
+            return $me->generateUrl('actas', array('page' => $page));
+        };
+
+        // Paginator - view
+        $translator = $this->get('translator');
+        $view = new TwitterBootstrapView();
+        $pagerHtml = $view->render($pagerfanta, $routeGenerator, array(
+            'proximity' => 3,
+            'prev_message' => $translator->trans('views.index.pagprev', array(), 'JordiLlonchCrudGeneratorBundle'),
+            'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
+        ));
+
+        return array($entities, $pagerHtml);
+    }
+
     /**
      * Creates a new Actas entity.
      *
@@ -44,14 +133,15 @@ class ActasController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Actas();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $entity  = new Actas();
+        $form = $this->createForm(new ActasType(), $entity);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
             return $this->redirect($this->generateUrl('actas_show', array('id' => $entity->getId())));
         }
@@ -60,25 +150,6 @@ class ActasController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         );
-    }
-
-    /**
-     * Creates a form to create a Actas entity.
-     *
-     * @param Actas $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Actas $entity)
-    {
-        $form = $this->createForm(new ActasType(), $entity, array(
-            'action' => $this->generateUrl('actas_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
@@ -91,11 +162,21 @@ class ActasController extends Controller
     public function newAction()
     {
         $entity = new Actas();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createForm(new ActasType(), $entity);
+
+        $cliente = new Cliente();
+        $formCli   = $this->createForm(new ClienteType(), $cliente);
+
+        $abogadoCp = new Abogado();
+        $formAb   = $this->createForm(new AbogadoType(), $abogadoCp);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'cliente'=> $cliente,
+            'formCli'=> $formCli->createView(),
+            'abogadoCp'=> $abogadoCp,
+            'formAb' => $formAb->createView()
         );
     }
 
@@ -141,7 +222,7 @@ class ActasController extends Controller
             throw $this->createNotFoundException('Unable to find Actas entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createForm(new ActasType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -151,24 +232,6 @@ class ActasController extends Controller
         );
     }
 
-    /**
-    * Creates a form to edit a Actas entity.
-    *
-    * @param Actas $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Actas $entity)
-    {
-        $form = $this->createForm(new ActasType(), $entity, array(
-            'action' => $this->generateUrl('actas_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Actas entity.
      *
@@ -187,13 +250,17 @@ class ActasController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $editForm = $this->createForm(new ActasType(), $entity);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
             return $this->redirect($this->generateUrl('actas_edit', array('id' => $id)));
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
         }
 
         return array(
@@ -202,6 +269,7 @@ class ActasController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Actas entity.
      *
@@ -211,7 +279,7 @@ class ActasController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -223,6 +291,9 @@ class ActasController extends Controller
 
             $em->remove($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
         }
 
         return $this->redirect($this->generateUrl('actas'));
@@ -233,14 +304,12 @@ class ActasController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('actas_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
             ->getForm()
         ;
     }
