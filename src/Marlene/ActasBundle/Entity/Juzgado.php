@@ -159,21 +159,10 @@ class Juzgado
         return $this->provincia;
     }
 
-  
-
-
-    function __toString()
-    {
-        $var="Juzgado Nro: ";
-        $var.=$this->getNumero();
-        $var.="(Rama: ".$this->getRama().")";
-        return $var;
-    }
-
     /**
      * Set rama
      *
-     * @param String
+     * @param string $rama
      * @return Juzgado
      */
     public function setRama($rama)
@@ -186,10 +175,19 @@ class Juzgado
     /**
      * Get rama
      *
-     * @return String 
+     * @return string 
      */
     public function getRama()
     {
         return $this->rama;
+    }
+
+
+    function __toString()
+    {
+        $var="Juzgado numero: ";
+        $var.=$this->getNumero();
+        $var.="(Rama: ".$this->getRama().")";
+        return $var;
     }
 }

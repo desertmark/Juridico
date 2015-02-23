@@ -76,7 +76,6 @@ class Actas
 
 
 
-
     /**
      * Get id
      *
@@ -291,5 +290,4 @@ class Actas
     {
         return $this->actuacion;
     }
-
 }

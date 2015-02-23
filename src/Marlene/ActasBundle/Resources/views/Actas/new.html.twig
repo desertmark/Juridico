@@ -5,11 +5,64 @@
 {% endblock %}
 
 {% block javascript %}
-<script type="text/javascript" src="{{ asset('js/actas_new_form.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("#clienteLbl").css('display','none');
+	$("#marlene_actasbundle_actas_cliente").css('display','none');
+
+	$('#nuevoCli').click(function(){
+		
+		if($('#nuevoCli').is(':checked')) {  
+
+            $("#clienteLbl").css('display','none');
+			$("#marlene_actasbundle_actas_cliente").css('display','none');
+			$("#clienteForm").css('display','block');
+        } else { 
+ 
+            $("#clienteLbl").css('display','block');
+		    $("#marlene_actasbundle_actas_cliente").css('display','block');
+			$("#clienteForm").css('display','none');		    
+        }
+
+    
+	});
+
+	$("#abogadoCpLbl").css('display','none');
+	$("#marlene_actasbundle_actas_abogadoContraparte").css('display','none');
+
+	$('#nuevoAbogadoCp').click(function(){
+		
+		if($('#nuevoAbogadoCp').is(':checked')) {  
+
+            $("#abogadoCpLbl").css('display','none');
+			$("#marlene_actasbundle_actas_cliente").css('display','none');
+			$("#abogadoContraparteForm").css('display','block');
+        } else { 
+ 
+            $("#abogadoCpLbl").css('display','block');
+		    $("#marlene_actasbundle_actas_abogadoContraparte").css('display','block');
+			$("#abogadoContraparteForm").css('display','none');		    
+        }
+    });
+});
+
+</script>
 {% endblock %}
 
 
 {% block page %}
+
+{% form_theme form _self %}
+
+{% block _marlene_actasbundle_actas_fecha_widget %}
+
+	{% set type = 'date' %}
+    {{ block('form_widget_simple') }}
+
+{% endblock %}
+
+
 <h1>{{ 'views.new.creation'|trans({'%entity%': 'Actas'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
 
 <form class="well" action="{{ path('actas_create') }}" method="post" {{ form_enctype(form) }}>
@@ -44,7 +97,6 @@
 
 		{{ form_label(form.abogadoContraparte, 'Abogado Contraparte', {'label_attr': {'id': 'abogadoCpLbl'}}) }}
 		{{ form_widget(form.abogadoContraparte)}}
-
 
 	    {{ form_widget(form) }}
 	    <p>
