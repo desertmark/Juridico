@@ -1,7 +1,7 @@
 <?php
 
 namespace Marlene\ActasBundle\Controller;
-
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,6 +14,10 @@ use Pagerfanta\View\TwitterBootstrapView;
 use Marlene\ActasBundle\Entity\Juzgado;
 use Marlene\ActasBundle\Form\JuzgadoType;
 use Marlene\ActasBundle\Form\JuzgadoFilterType;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 /**
  * Juzgado controller.
@@ -40,6 +44,29 @@ class JuzgadoController extends Controller
             'pagerHtml' => $pagerHtml,
             'filterForm' => $filterForm->createView(),
         );
+    }
+
+
+    /**
+     *@Route("/indexJson", name="juzgado_indexJson")
+     *@Method("POST")
+     */
+    public function indexJson(Request $request)
+    {
+        /*Como json_encode es una funcion que toma un array como parametro 
+        y no un objeto esto sirve para transformar de object a json*/
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        //Obteniendo parametro de POST
+        $rama = $request->request->get('rama');
+
+        $repository = $this->getDoctrine()->getRepository("MarleneActasBundle:Juzgado");//clase especifica de una entidad que nos ayuda a obtener los objetos mas facil
+        $juzgados = $repository->findByRama($rama);
+
+        $jsonContent = $serializer->serialize($juzgados, 'json');
+
+        return new Response($jsonContent);
     }
 
     /**

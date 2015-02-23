@@ -2,12 +2,32 @@
 
 namespace Marlene\ActasBundle\Form;
 
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
+use Marlene\ActasBundle\Entity\Juzgado;
+use Marlene\ActasBundle\Entity\Rama;
+
 class ActasType extends AbstractType
 {
+    private $i = 0;
+
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+        return $this;
+    }
+
+    public function getRepository($repository)
+    {
+      return $this->repository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -16,12 +36,22 @@ class ActasType extends AbstractType
                 'label' => 'Caracter de actuacion', 
                 'choices' => array('Actor' => 'Actor', 'Demandado' => 'Demandado', 'Tercero interesado' => 'Tercero interesado'
                     )))
-            ->add('fecha','text')          
+            ->add('fecha','date', array('widget' =>'single_text' , ))          
             ->add('abogado')
-            ->add('abogadoContraparte')
+            ->add('rama','choice', array('label'=>'FUERO', 'mapped' => false, 'choices' => array(
+                ''=>'Seleccionar Fuero',
+                'Civil y Comercial'=>'Civil y Comercial',
+                'Penal'=>'Penal',
+                'Laboral'=>'Laboral',
+                'De Menor y de Familia'=>'De Menor y de Familia',
+                'Contencioso Administrativo'=>'Contencioso Administrativo',
+                )))
             ->add('juzgado')
-            ->add('detalle')
+            ->add('abogadoContraparte')
+            ->add('detalle', 'textarea', array('attr'=>array('class'=>'tinymce')))
         ;
+        
+        
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -35,4 +65,6 @@ class ActasType extends AbstractType
     {
         return 'marlene_actasbundle_actas';
     }
+
+
 }
