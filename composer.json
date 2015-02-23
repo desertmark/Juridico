@@ -19,7 +19,9 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "jordillonch/crud-generator": "@Dev"
+        "jordillonch/crud-generator": "@Dev",
+        "symfony/serializer": "~2.6",
+        "stfalcon/tinymce-bundle": "0.3.*"
     },
     "scripts": {
         "post-install-cmd": [

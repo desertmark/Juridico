@@ -2,6 +2,8 @@
 
 namespace Marlene\ActasBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -133,21 +135,32 @@ class ActasController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Actas();
-        $form = $this->createForm(new ActasType(), $entity);
+        $cliente  = new Cliente();
+
+        $formCli = $this->createForm(new ClienteType(), $cliente);
+        $formCli->bind($request);
+
+        if ($formCli->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cliente);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+        }
+
+        $acta  = new Actas();
+        $form = $this->createForm(new ActasType(), $acta);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($acta);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-            return $this->redirect($this->generateUrl('actas_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('actas_show', array('id' => $acta->getId())));
         }
-
         return array(
-            'entity' => $entity,
+            'entity' => $acta,
             'form'   => $form->createView(),
         );
     }
@@ -161,8 +174,10 @@ class ActasController extends Controller
      */
     public function newAction()
     {
+
+        $actasType = new ActasType();
         $entity = new Actas();
-        $form   = $this->createForm(new ActasType(), $entity);
+        $form   = $this->createForm($actasType, $entity);
 
         $cliente = new Cliente();
         $formCli   = $this->createForm(new ClienteType(), $cliente);
