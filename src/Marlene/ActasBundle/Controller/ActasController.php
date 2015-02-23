@@ -147,6 +147,20 @@ class ActasController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
         }
 
+        $abogado  = new Abogado();
+
+        $formAb = $this->createForm(new AbogadoType(), $abogado);
+        $formAb->bind($request);
+
+
+
+        if ($formAb->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($abogado);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+        }
+
         $acta  = new Actas();
         $form = $this->createForm(new ActasType(), $acta);
         $form->bind($request);
