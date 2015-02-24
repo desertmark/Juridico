@@ -135,37 +135,45 @@ class ActasController extends Controller
      */
     public function createAction(Request $request)
     {
-        $cliente  = new Cliente();
-
-        $formCli = $this->createForm(new ClienteType(), $cliente);
-        $formCli->bind($request);
-
-        if ($formCli->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($cliente);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+        //Request-request->get('nombre del div que contiene esa parte del form')->["campo del formulario"] para obtener el valor
+        if($request->request->get("marlene_actasbundle_actas")["cliente"]=="")
+        {
+            $cliente  = new Cliente();
+            $formCli = $this->createForm(new ClienteType(), $cliente);
+            $formCli->bind($request);
+            if ($formCli->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($cliente);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+            }
         }
-
-        $abogado  = new Abogado();
-
-        $formAb = $this->createForm(new AbogadoType(), $abogado);
-        $formAb->bind($request);
-
-
-
-        if ($formAb->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($abogado);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+        if($request->request->get("marlene_actasbundle_actas")["abogadoContraparte"]=="")
+        {
+            $abogado  = new Abogado();
+            $formAb = $this->createForm(new AbogadoType(), $abogado);
+            $formAb->bind($request);
+            if ($formAb->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($abogado);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+            }
         }
-
         $acta  = new Actas();
         $form = $this->createForm(new ActasType(), $acta);
         $form->bind($request);
 
         if ($form->isValid()) {
+            var_dump($acta);
+            if($request->request->get("marlene_actasbundle_actas")["cliente"]=="")
+            {
+                $acta->setCliente($cliente);
+            }
+            if($request->request->get("marlene_actasbundle_actas")["abogadoContraparte"]=="")
+            {
+                $acta->setAbogadoContraparte($abogado);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($acta);
             $em->flush();

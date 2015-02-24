@@ -14,7 +14,7 @@ class AbogadoType extends AbstractType
             ->add('cUIT','text', array('label'=>'CUIT'))
             ->add('apellido')
             ->add('nombre')
-            ->add('telefono')
+            ->add('telefono','text')
             ->add('email')
         ;
     }

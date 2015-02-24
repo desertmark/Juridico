@@ -15,18 +15,6 @@ use Marlene\ActasBundle\Entity\Rama;
 
 class ActasType extends AbstractType
 {
-    private $i = 0;
-
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-        return $this;
-    }
-
-    public function getRepository($repository)
-    {
-      return $this->repository;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

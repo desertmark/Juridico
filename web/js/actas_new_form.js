@@ -31,13 +31,14 @@ $("#marlene_actasbundle_actas_juzgado").find('option').remove();
 
             $("#clienteLbl").css('display','none');
 			$("#marlene_actasbundle_actas_cliente").css('display','none');
+			$("#marlene_actasbundle_actas_cliente").val("").change()//reinicia el select a vacio
 			$("#clienteForm").css('display','block');
 			//restablece el atributo required para que no se envie los datos vacios;
 			$("#marlene_actasbundle_cliente input").attr("required","required");
         } else { //checkbox-->not checked
             $("#clienteLbl").css('display','block');
 		    $("#marlene_actasbundle_actas_cliente").css('display','block');
-			$("#clienteForm").css('display','none');	
+			$("#clienteForm").css('display','none');
 			//quita el atributo required para poder enviar los datos vacios;
         	$("#marlene_actasbundle_cliente input").removeAttr("required");	    
         }
@@ -55,6 +56,7 @@ $("#marlene_actasbundle_actas_juzgado").find('option').remove();
             $("#abogadoCpLbl").css('display','none');
 			$("#marlene_actasbundle_actas_cliente").css('display','none');
 			$("#abogadoContraparteForm").css('display','block');
+			$("#abogadoContraparteForm").val("").change()//reinicia el select a vacio
 			//restablece el atributo required para que no se envie los datos vacios;
 			$("#marlene_actasbundle_abogado input").attr("required","required");
         } else { 
