@@ -9,17 +9,58 @@
 <h1>Actas</h1>
 
 <form class="form-horizontal">
-    <fieldset>        <div class="control-group">
+    <fieldset>        
+        <div class="control-group">
             <label class="control-label">Id</label>
-            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            </div>
-        </div>        <div class="control-group">
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Cliente</label>
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.cliente }}</span>            
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Actuacion</label>
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.actuacion }}</span>            
+            </div>
+        </div>          
+        <div class="control-group">
             <label class="control-label">Fecha</label>
-            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.fecha|date('Y-m-d H:i:s') }}</span>            </div>
-        </div>        <div class="control-group">
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.fecha|date('d-m-Y') }}</span>            
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Abogado</label>
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.abogado }}</span>            
+            </div>
+        </div> 
+        <div class="control-group">
+            <label class="control-label">Abogado Contraparte</label>
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.abogadoContraparte }}</span>            
+            </div>
+        </div> 
+        <div class="control-group">
+            <label class="control-label">Juzgado</label>
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.juzgado }}</span>            
+            </div>
+        </div> 
+        <div class="control-group">
             <label class="control-label">Detalle</label>
-            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.detalle }}</span>            </div>
-        </div>    </fieldset>
+            <div class="controls">                
+                <span class="input-xlarge uneditable-input">{{ entity.detalle }}</span>  
+            </div>
+    </fieldset>
 </form>
+
+
 
 <div>
     <div class="float-left">
@@ -40,4 +81,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}
