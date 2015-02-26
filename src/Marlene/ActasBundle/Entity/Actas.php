@@ -62,9 +62,13 @@ class Actas
     private $juzgado;
 
     /**
-     *
-     *@ORM\OneToMany(targetEntity="Comentarios", mappedBy="acta")
-     */
+     * @ORM\ManyToMany(targetEntity="Comentarios")
+     * @ORM\JoinTable(name="actas_comentarios",
+     *      joinColumns={@ORM\JoinColumn(name="acta_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="comentario_id", referencedColumnName="id", unique=true)}
+     *      )
+     *@ORM\OrderBy({"fechaHora" = "desc"})
+     **/
     private $comentarios;
 
     /**
@@ -73,6 +77,13 @@ class Actas
      * @ORM\Column(name="actuacion", type="text")
      */
     private $actuacion;
+
+    /**
+     *
+     *@var string
+     *@ORM\Column(name="descripcion", type="text")
+     */
+    private $descripcion;
 
 
 
@@ -292,4 +303,27 @@ class Actas
         return $this->actuacion;
     }
 
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Actas
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
 }

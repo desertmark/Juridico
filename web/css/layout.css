@@ -240,5 +240,20 @@ button:hover,input[type="button"]:hover
 	width:500px;
 	margin-left:7%;
 }
-
-
+/***Estilos de Actas show***/
+#divComentarios
+{
+	//background-color: red;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 15px;
+	width:80%;
+}
+th.creador,th.fechaHora
+{
+	width: 150px;
+}
+th.eliminar
+{
+	width: 50px;
+}

@@ -37,6 +37,7 @@ class ActasType extends AbstractType
             ->add('juzgado')
             ->add('abogadoContraparte')
             ->add('detalle', 'textarea', array('attr'=>array('class'=>'tinymce')))
+            ->add('descripcion', 'textarea', array('attr'=>array('class'=>'tinymce')))
         ;
         
         

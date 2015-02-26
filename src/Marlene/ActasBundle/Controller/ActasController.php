@@ -236,9 +236,16 @@ class ActasController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        $com_delete_forms = array();
+        foreach ($entity->getComentarios() as $com) {
+            $com_delete_form = $this->createDeleteComForm($com->getId());
+            array_push($com_delete_forms,$com_delete_form->createView());
+        }
+
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'com_delete_forms' => $com_delete_forms,
         );
     }
 
@@ -350,4 +357,24 @@ class ActasController extends Controller
             ->getForm()
         ;
     }
+
+        /**
+     * Creates a form to delete a Comentarios entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteComForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('actas_comentarios_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+
+            ->getForm()
+        ;
+    }
 }
+
+
+
