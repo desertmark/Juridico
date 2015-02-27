@@ -3,12 +3,9 @@
 {% block title %}
 {{ parent() }} -  {{ 'views.edit.edit'|trans({'%entity%': 'Actas'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
-
-
-
-
-
-
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('js/actas_edit_form.js') }}"></script>
+{% endblock %}
 {% block page %}
 
 <h1>{{ 'views.edit.edit'|trans({'%entity%': 'Actas'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
@@ -35,4 +32,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}

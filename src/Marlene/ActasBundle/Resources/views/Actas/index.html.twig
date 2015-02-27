@@ -53,7 +53,10 @@
             <th>Id</th>
             <th>Fecha</th>
             <th>Cliente</th>
+            <th>Actuacion</th>
             <th>Abogado</th>
+            <th>Abogado Contraparte</th>
+            <th>Juzgado</th>
             <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
         </tr>
     </thead>
@@ -61,9 +64,12 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('actas_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
             <td>{{ entity.cliente }}</td>
-            <td>{{ entity.Abogado }}</td>
+            <td>{{ entity.actuacion }}</td>
+            <td>{{ entity.abogado }}</td>
+            <td>{{ entity.abogadoContraparte }}</td>
+            <td>{{ entity.juzgado }}</td>
             <td>
         <a class="btn btn-mini" href="{{ path('actas_show', { 'id': entity.id }) }}">
             {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}

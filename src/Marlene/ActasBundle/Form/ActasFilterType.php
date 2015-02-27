@@ -15,7 +15,10 @@ class ActasFilterType extends AbstractType
     {
         $builder
             ->add('id', 'filter_number_range')
-            ->add('fecha', 'filter_date_range')
+            ->add('cliente', 'filter_entity', array('class'=>'MarleneActasBundle:Cliente'))
+            ->add('abogadoConrtaparte', 'filter_entity', array('class'=>'MarleneActasBundle:Abogado'))
+            ->add('juzgado', 'filter_entity', array('class'=>'MarleneActasBundle:Juzgado'))
+            ->add('fecha', 'filter_date_range',array('left_date_options'=>array('widget'=>'single_text'),'right_date_options'=>array('widget'=>'single_text')))
             ->add('detalle', 'filter_text')
         ;
 

@@ -24,7 +24,7 @@ class Comentarios
     /**
      * @var \Abogado
      *
-     * @ORM\ManyToOne(targetEntity="Abogado")
+     * @ORM\Column(name="creador", type="string")
      */
     private $creador;
 
@@ -41,13 +41,6 @@ class Comentarios
      *@ORM\Column(name="fecha_hora", type="datetime")
      */
     private $fechaHora;
-
-    /**
-     * @var \Actas
-     *
-     * @ORM\ManyToOne(targetEntity="Actas", inversedBy="comentarios")
-     */
-    private $acta;
 
 
     /*METODOS*/
@@ -132,26 +125,4 @@ class Comentarios
         return $this->fechaHora;
     }
 
-    /**
-     * Set Acta
-     *
-     * @param Acta $acta
-     * @return \Acta
-     */
-    public function setActa($acta)
-    {
-        $this->acta = $acta;
-
-        return $this;
-    }
-
-    /**
-     * Get Acta
-     *
-     * @return \Acta 
-     */
-    public function getActa()
-    {
-        return $this->acta;
-    }
 }
