@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "jordillonch/crud-generator": "@Dev",
         "symfony/serializer": "~2.6",
-        "stfalcon/tinymce-bundle": "0.3.*"
+        "stfalcon/tinymce-bundle": "0.3.*",
+        "friendsofsymfony/user-bundle": "~1.3"
     },
     "scripts": {
         "post-install-cmd": [
