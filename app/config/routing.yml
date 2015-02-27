@@ -3,8 +3,5 @@ marlene_actas:
     prefix:   /
 
 app:
-    resource: "@AppBundle/Controller/"
+    resource: @AppBundle/Controller/
     type:     annotation
-
-_user_bundle:
-    resource: "@UserBundle/Resources/Config/routing.yml"
