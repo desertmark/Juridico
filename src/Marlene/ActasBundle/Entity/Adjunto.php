@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -118,7 +119,12 @@ class Adjunto
 
     /**
      * Get path
+     * @Assert\File(mimeTypes={"application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel",
      *
+     *  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.spreadsheet",
+     *
+     *  "application/vnd.oasis.opendocument.text", "image/png", "image/jpeg", "application/vnd.oasis.opendocument.text-template"},
+     * mimeTypesMessage = "Los tipos de documentos soportados son: .docx, .xlsx, .pdf, .png, .jpeg")
      * @return string 
      */
     public function getPath()
@@ -143,7 +149,7 @@ class Adjunto
             $fs = new Filesystem();
             $extension = $file->guessExtension();
             if (!$extension) {
-                $this->extension = 'bin';
+                $extension = 'bin';
             }            
             $this->setExtension($extension);
             $this->setPath($this->getAdjuntoDir().'/'.$this->getNombre().'.'.$extension);

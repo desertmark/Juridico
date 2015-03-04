@@ -54,7 +54,6 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>Extension</th>
-            <th>Path</th>
             <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
         </tr>
     </thead>
@@ -64,14 +63,16 @@
             <td><a href="{{ path('documentos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.nombre }}</td>
             <td>{{ entity.extension }}</td>
-            <td>{{ entity.path }}</td>
+            <td><a href="{{asset(entity.path)}}">Descargar</a></td>
             <td>
-        <a class="btn btn-mini" href="{{ path('documentos_show', { 'id': entity.id }) }}">
-            {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>
-        <a class="btn btn-mini" href="{{ path('documentos_edit', { 'id': entity.id }) }}">
-            {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>            </td>
+                <a class="btn btn-mini" href="{{ path('documentos_show', { 'id': entity.id }) }}">
+                    {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                </a>
+                <a class="btn btn-mini" href="{{ path('documentos_edit', { 'id': entity.id }) }}">
+                    {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                </a>          
+            </td>
+
         </tr>
     {% endfor %}
     </tbody>
