@@ -71,6 +71,16 @@ class Actas
      **/
     private $comentarios;
 
+     /**
+     * @ORM\ManyToMany(targetEntity="Adjunto")
+     * @ORM\JoinTable(name="actas_adjuntos",
+     *      joinColumns={@ORM\JoinColumn(name="acta_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="adjunto_id", referencedColumnName="id", unique=true)}
+     *      )
+     *@ORM\OrderBy({"nombre" = "asc"})
+     **/
+    private $adjuntos;
+
     /**
      * @var string
      *
@@ -86,6 +96,14 @@ class Actas
     private $descripcion;
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -147,13 +165,6 @@ class Actas
     }
 
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add comentarios
