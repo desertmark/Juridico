@@ -17,7 +17,6 @@ class AdjuntoFilterType extends AbstractType
             ->add('id', 'filter_number_range')
             ->add('nombre', 'filter_text')
             ->add('extension', 'filter_text')
-            ->add('path', 'filter_text')
         ;
 
         $listener = function(FormEvent $event)

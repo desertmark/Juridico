@@ -95,6 +95,12 @@ class Actas
      */
     private $descripcion;
 
+    /**
+     *
+     *@var string
+     *@ORM\Column(name="auto", type="string")
+     */
+    private $auto;
 
     /**
      * Constructor
@@ -336,5 +342,61 @@ class Actas
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Set auto
+     *
+     * @param string $auto
+     * @return Actas
+     */
+    public function setAuto($auto)
+    {
+        $this->auto = $auto;
+
+        return $this;
+    }
+
+    /**
+     * Get auto
+     *
+     * @return string 
+     */
+    public function getAuto()
+    {
+        return $this->auto;
+    }
+
+    /**
+     * Add adjuntos
+     *
+     * @param \Marlene\ActasBundle\Entity\Adjunto $adjuntos
+     * @return Actas
+     */
+    public function addAdjunto(\Marlene\ActasBundle\Entity\Adjunto $adjuntos)
+    {
+        $this->adjuntos[] = $adjuntos;
+
+        return $this;
+    }
+
+    /**
+     * Remove adjuntos
+     *
+     * @param \Marlene\ActasBundle\Entity\Adjunto $adjuntos
+     */
+    public function removeAdjunto(\Marlene\ActasBundle\Entity\Adjunto $adjuntos)
+    {
+        $this->adjuntos->removeElement($adjuntos);
+    }
+
+    /**
+     * Get adjuntos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAdjuntos()
+    {
+        return $this->adjuntos;
     }
 }

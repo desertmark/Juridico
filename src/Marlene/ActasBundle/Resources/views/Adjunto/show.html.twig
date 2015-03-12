@@ -27,7 +27,14 @@
             <div class="controls">                
                 <span class="input-xlarge uneditable-input">{{ entity.extension }}</span>            
             </div>
-        </div>    
+        </div>
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">                
+                <a href="{{asset(entity.path)}}">Descargar</a>            
+            </div>
+        </div>
+                   
     </fieldset>
 </form>
 
@@ -37,11 +44,11 @@
             {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
     </div>
-    <div class="float-left">
+    <!--<div class="float-left">
         <a class="btn btn-primary" href="{{ path('documentos_edit', { 'id': entity.id }) }}">
             {{ 'views.recordactions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
-    </div>
+    </div>-->
     <div class="float-left">
         <form action="{{ path('documentos_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />

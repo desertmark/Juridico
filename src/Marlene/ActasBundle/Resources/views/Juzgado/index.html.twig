@@ -72,12 +72,13 @@
             <td>{{ entity.provincia }}</td>
             <td>{{ entity.rama }}</td>
             <td>
-        <a class="btn btn-mini" href="{{ path('juzgado_show', { 'id': entity.id }) }}">
-            {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>
-        <a class="btn btn-mini" href="{{ path('juzgado_edit', { 'id': entity.id }) }}">
-            {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>            </td>
+                <a class="btn btn-mini" href="{{ path('juzgado_show', { 'id': entity.id }) }}">
+                    {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                </a>
+                <a class="btn btn-mini" href="{{ path('juzgado_edit', { 'id': entity.id }) }}">
+                    {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                </a>            
+            </td>
         </tr>
     {% endfor %}
     </tbody>

@@ -126,7 +126,7 @@
     {% if entity.comentarios.isEmpty()==1 %}
     <h5>No hay comentarios en este acta</h5>
     {%endif%}
-    <button id="btnComentar" class="btn btn-success">Comentar acta</button>
+    <button id="btnComentar" class="btn btn-success" onClick = "comentar('{{ app.user }}')">Comentar acta</button>
 </div>
 
 
