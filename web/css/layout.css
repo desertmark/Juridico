@@ -258,6 +258,18 @@ th.eliminar
 	width: 50px;
 }
 /***Estilos de Login***/
+.login
+{
+	background-color: white;
+	padding-left: 5%;
+	padding-top:15px;
+	padding-bottom:10px; 
+	max-width: 400px;
+	margin-top:60px;
+	margin-right: auto;
+	margin-left:auto;
+	border-radius:10px;
+}
 .logout
 {
 	margin-right:20px;
