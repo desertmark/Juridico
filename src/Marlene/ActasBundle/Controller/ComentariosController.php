@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Marlene\ActasBundle\Entity\Comentarios;
 use Marlene\ActasBundle\Form\ComentariosType;
 
+use Acme\UserBundle\Entity\User;
 use Marlene\ActasBundle\Entity\Actas;
 
 /**

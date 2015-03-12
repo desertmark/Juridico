@@ -1,10 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    
 
 framework:
     #esi:             ~
-    translator:      { fallback: "es" }
+    translator:      ~
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -20,7 +21,7 @@ framework:
     session:         ~
     fragments:       ~
     http_method_override: true
-    translator: { fallback: es }
+    translator: ~
 
 # Twig Configuration
 twig:

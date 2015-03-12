@@ -3,6 +3,7 @@
 namespace Marlene\ActasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Acme\UserBundle\Entity\User;
 
 /**
  * Comentarios
@@ -22,10 +23,9 @@ class Comentarios
     private $id;
 
     /**
-     * @var \Abogado
-     *
-     * @ORM\Column(name="creador", type="string")
-     */
+     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     **/
     private $creador;
 
     /**
@@ -43,9 +43,6 @@ class Comentarios
     private $fechaHora;
 
 
-    /*METODOS*/
-
-
     /**
      * Get id
      *
@@ -54,29 +51,6 @@ class Comentarios
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set creador
-     *
-     * @param string $creador
-     * @return Comentarios
-     */
-    public function setCreador($creador)
-    {
-        $this->creador = $creador;
-
-        return $this;
-    }
-
-    /**
-     * Get creador
-     *
-     * @return string 
-     */
-    public function getCreador()
-    {
-        return $this->creador;
     }
 
     /**
@@ -105,8 +79,8 @@ class Comentarios
     /**
      * Set fechaHora
      *
-     * @param string $fechaHora
-     * @return \DateTime
+     * @param \DateTime $fechaHora
+     * @return Comentarios
      */
     public function setFechaHora($fechaHora)
     {
@@ -116,7 +90,7 @@ class Comentarios
     }
 
     /**
-     * Get Fecha Hora
+     * Get fechaHora
      *
      * @return \DateTime 
      */
@@ -125,4 +99,26 @@ class Comentarios
         return $this->fechaHora;
     }
 
+    /**
+     * Set creador
+     *
+     * @param \Acme\UserBundle\Entity\User $creador
+     * @return Comentarios
+     */
+    public function setCreador(\Acme\UserBundle\Entity\User $creador = null)
+    {
+        $this->creador = $creador;
+
+        return $this;
+    }
+
+    /**
+     * Get creador
+     *
+     * @return \Acme\UserBundle\Entity\User 
+     */
+    public function getCreador()
+    {
+        return $this->creador;
+    }
 }
