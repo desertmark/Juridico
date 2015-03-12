@@ -15,7 +15,14 @@ class JuzgadoType extends AbstractType
             ->add('direccion')
             ->add('ciudad')
             ->add('provincia')
-            ->add('rama')
+            ->add('rama', 'choice', array('choices'=>array(
+                ''=>'Seleccionar Fuero',
+                'Civil y Comercial'=>'Civil y Comercial',
+                'Penal'=>'Penal',
+                'Laboral'=>'Laboral',
+                'De Menor y de Familia'=>'De Menor y de Familia',
+                'Contencioso Administrativo'=>'Contencioso Administrativo',
+                )))
         ;
     }
 

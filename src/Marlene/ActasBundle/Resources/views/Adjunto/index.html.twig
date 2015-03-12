@@ -35,7 +35,6 @@
                 {{ form_row(filterForm.id) }}
                 {{ form_row(filterForm.nombre) }}
                 {{ form_row(filterForm.extension) }}
-                {{ form_row(filterForm.path) }}
                 {{ form_rest(filterForm) }}
 
                 <p>
@@ -68,9 +67,9 @@
                 <a class="btn btn-mini" href="{{ path('documentos_show', { 'id': entity.id }) }}">
                     {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
                 </a>
-                <a class="btn btn-mini" href="{{ path('documentos_edit', { 'id': entity.id }) }}">
+                <!--<a class="btn btn-mini" href="{{ path('documentos_edit', { 'id': entity.id }) }}">
                     {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                </a>          
+                </a>-->          
             </td>
 
         </tr>
