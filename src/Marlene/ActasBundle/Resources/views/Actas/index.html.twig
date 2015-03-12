@@ -54,7 +54,7 @@
             <th>Fecha</th>
             <th>Cliente</th>
             <th>Actuacion</th>
-            <th>Abogado</th>
+            <th>Usuario Creador</th>
             <th>Abogado Contraparte</th>
             <th>Juzgado</th>
             <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
@@ -67,7 +67,7 @@
             <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
             <td>{{ entity.cliente }}</td>
             <td>{{ entity.actuacion }}</td>
-            <td>{{ entity.abogado }}</td>
+            <td>{{ entity.usuarioCreador }}</td>
             <td>{{ entity.abogadoContraparte }}</td>
             <td>{{ entity.juzgado }}</td>
             <td>

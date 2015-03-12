@@ -257,3 +257,9 @@ th.eliminar
 {
 	width: 50px;
 }
+/***Estilos de Login***/
+.logout
+{
+	margin-right:20px;
+	float:right;
+}

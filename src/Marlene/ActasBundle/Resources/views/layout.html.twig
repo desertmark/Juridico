@@ -19,7 +19,6 @@
 	</head>
 	<body id="body">
 		<div id="BarraMenu">
-
 			<ul id="menu">
 				<li><a href="{{url('marlene_actas_homepage')}}">Inicio</a></li>
 				<li><a href="{{url('actas')}}">Actas</a></li>
@@ -32,20 +31,16 @@
 					</ul>
 				</li>
 				<li><a href="{{url('documentos')}}">Documentos</a></li>
-                             
-                                {% if is_granted('ROLE_ADMIN') %}
-                                       <li>logged in as {{ app.user ? app.user.username : 'Anonymous' }} - <a href="{{ path('fos_user_security_logout') }}">Logout</a></li> 
-                                {% endif %}
-                                
-                                
- 
+				<li><a href="{{path('fos_user_registration_register')}}">Crear usuario</a></li>
+	                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	                <div class="logout"> 
+	                	Usted ha ingresado como: {{ app.user }} - <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+	                </div>
+	                {% endif %}                
 			</ul>
 
-		</div>
-
-				
-				
-			{% block body %}{% endblock %}
+		</div>	
+		{% block body %}{% endblock %}
 		
 	</body>
 </html>
