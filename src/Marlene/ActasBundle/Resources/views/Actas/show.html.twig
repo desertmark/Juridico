@@ -96,6 +96,7 @@
 <br>
 <br>
 <div id="divComentarios">
+{{ app.user }}
     <h4>Comentarios:</h4>
     
     <table id="comentariosTbl" class="table table-striped table-bordered table-condensed">
@@ -108,7 +109,7 @@
         <tbody>
             {% for com in entity.comentarios %}
             <tr>
-                <td>{{com.creador}}</td>
+                <td>{{com.creador|default('value')}}</td>
                 <td>{{com.fechaHora|date('d-m-Y H:i:s')}}</td>
                 <td>{{com.texto}}</td>
                 <td>

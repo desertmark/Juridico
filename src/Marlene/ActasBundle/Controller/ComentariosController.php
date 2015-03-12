@@ -70,7 +70,8 @@ class ComentariosController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         
-        $entity->setCreador($request->request->get('creador'));
+       // $entity->setCreador($request->request->get('creador'));
+        $entity->setCreador($this->container->get('security.context')->getToken()->getUser());
         $entity->setFechaHora($now);
         $entity->setTexto($request->request->get('texto'));
 
