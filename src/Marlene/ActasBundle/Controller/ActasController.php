@@ -165,7 +165,6 @@ class ActasController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            var_dump($acta);
             if($request->request->get("marlene_actasbundle_actas")["cliente"]=="")
             {
                 $acta->setCliente($cliente);
@@ -174,6 +173,7 @@ class ActasController extends Controller
             {
                 $acta->setAbogadoContraparte($abogado);
             }
+            $acta->setUsuarioCreador($this->container->get('security.context')->getToken()->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($acta);
             $em->flush();

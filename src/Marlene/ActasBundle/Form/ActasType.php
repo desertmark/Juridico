@@ -24,8 +24,8 @@ class ActasType extends AbstractType
                 'label' => 'Caracter de actuacion', 
                 'choices' => array('Actor' => 'Actor', 'Demandado' => 'Demandado', 'Tercero interesado' => 'Tercero interesado'
                     )))
-            ->add('fecha','date', array('widget' =>'single_text'))          
-            ->add('abogado')
+            ->add('fecha','date', array('widget' =>'single_text'))
+            ->add('auto')          
             ->add('rama','choice', array('label'=>'FUERO', 'mapped' => false, 'choices' => array(
                 ''=>'Seleccionar Fuero',
                 'Civil y Comercial'=>'Civil y Comercial',

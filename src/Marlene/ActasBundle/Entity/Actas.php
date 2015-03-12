@@ -3,6 +3,7 @@
 namespace Marlene\ActasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Acme\UserBundle\Entity\User;
 
 /**
  * Actas
@@ -33,19 +34,19 @@ class Actas
      * @ORM\Column(name="fecha", type="date")
      */
     private $fecha;
-
+    
     /**
-     * @var \Abogado
+     * @var Acme\UserBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="Abogado")
+     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+     *
      */
-    private $abogado;
+    private $usuarioCreador;
 
     /**
      * @var \Abogado
      *
      * @ORM\ManyToOne(targetEntity="Abogado")
-     *
      */
     private $abogadoContraparte;
 
@@ -229,29 +230,6 @@ class Actas
     }
 
     /**
-     * Set abogado
-     *
-     * @param \Marlene\ActasBundle\Entity\Abogado $abogado
-     * @return Actas
-     */
-    public function setAbogado(\Marlene\ActasBundle\Entity\Abogado $abogado = null)
-    {
-        $this->abogado = $abogado;
-
-        return $this;
-    }
-
-    /**
-     * Get abogado
-     *
-     * @return \Marlene\ActasBundle\Entity\Abogado 
-     */
-    public function getAbogado()
-    {
-        return $this->abogado;
-    }
-
-    /**
      * Set abogadoContraparte
      *
      * @param \Marlene\ActasBundle\Entity\Abogado $abogadoContraparte
@@ -398,5 +376,29 @@ class Actas
     public function getAdjuntos()
     {
         return $this->adjuntos;
+    }
+
+
+    /**
+     * Set usuarioCreador
+     *
+     * @param \Acme\UserBundle\Entity\User $usuarioCreador
+     * @return Actas
+     */
+    public function setUsuarioCreador(\Acme\UserBundle\Entity\User $usuarioCreador = null)
+    {
+        $this->usuarioCreador = $usuarioCreador;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioCreador
+     *
+     * @return \Acme\UserBundle\Entity\User 
+     */
+    public function getUsuarioCreador()
+    {
+        return $this->usuarioCreador;
     }
 }
