@@ -2,6 +2,7 @@
 app/bootstrap*
 # Symfony directories
 vendor/*
+!vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Resources/views/*
 */logs/*
 */cache/*
 web/uploads/*
