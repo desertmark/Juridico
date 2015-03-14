@@ -2,37 +2,37 @@ views:
     layout:
         bannersadmin: Administrator
     index:
-        filters: A ver si anda esta mierda
-        filter: Filter
-        reset: Reset
-        list: %entity% list
-        actions: Actions
-        createnew: Create a new
-        pagprev: '&larr; Previous'
-        pagnext: 'Next &rarr;'
+        filters: Filtros
+        filter: Filtrar
+        reset: Limpiar
+        list: Lista de %entity%
+        actions: Acciones
+        createnew: Crear
+        pagprev: '&larr; Anterior'
+        pagnext: 'Siguiente &rarr;'
     actions:
-        show: show
-        edit: edit
+        show: ver
+        edit: editar
     recordactions:
-        backtothelist: Back to the list
-        edit: Edit
-        delete: Delete
-        confirm: Delete the item?
+        backtothelist: Volver a la lista
+        edit: Editar
+        delete: Eliminar
+        confirm: Eliminar el elemento?
     new:
-        creation: Create %entity%
-        create: Create
+        creation: Crear %entity%
+        create: Crear
     edit:
-        edit: Edit %entity%
-        editbutton: Edit
+        edit: Editar %entity%
+        editbutton: Editar
     show:
-        show: Show %entity%
+        show: Ver %entity%
 flash:
     create:
-        success: Item has been successfully created.
-        error: An error has occurred during item creation.
+        success: Elemento creado satisfactoriamente.
+        error: Se ha producido un error durante la creación del elemento.
     update:
-        success: Item has been successfully updated.
-        error: An error has occurred during item update.
+        success: Elemento actualizado satisfactoriamente.
+        error: Se ha producido un error durante la actualización del elemento.
     delete:
-        success: Item has been deleted successfully.
-        error: An Error has occurred during item deletion.
+        success: Elemento eliminado satisfactoriamente.
+        error: Se ha producido un error durante la eliminación del elemento.
