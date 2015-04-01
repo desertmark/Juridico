@@ -12,6 +12,7 @@ class AdjuntoType extends AbstractType
     {
         $builder
             ->add('nombre')
+            ->add('acta')
             ->add('path','file',array('label'=>'Seleccione un archivo'))
         ;
     }

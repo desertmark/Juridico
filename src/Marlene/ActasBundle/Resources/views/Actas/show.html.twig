@@ -95,30 +95,72 @@
 <br>
 <br>
 <br>
-<div id="divComentarios">
+<div class="Actas_Show_Tbl">
+    <h4>Documentos:</h4>
+    {% if entity.adjuntos.isEmpty()==0 %}
 
-    <h4>Comentarios:</h4>
-    
+        <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Extension</th>
+                <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adjunto in entity.adjuntos %}
+            <tr>
+                <td><a href="{{ path('documentos_show', { 'id': adjunto.id }) }}">{{ adjunto.id }}</a></td>
+                <td>{{ adjunto.nombre }}</td>
+                <td>{{ adjunto.extension }}</td>
+                <td><a href="{{asset(adjunto.path)}}">Descargar</a></td>
+                <td>
+                    <a class="btn btn-mini" href="{{ path('documentos_show', { 'id': adjunto.id }) }}">
+                        {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                    </a>
+                    <!--<a class="btn btn-mini" href="{{ path('documentos_edit', { 'id': adjunto.id }) }}">
+                        {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                    </a>-->          
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <h5>No hay adjuntos en este acta</h5>
+    {%endif%}
+</div>
+<br>
+<br>
+<br>
+<div id="divComentarios" class="Actas_Show_Tbl">
     <table id="comentariosTbl" class="table table-striped table-bordered table-condensed">
         <thead>
-            <th class="creador">Creado por</th>
-            <th class="fechaHora">Creado el</th>
-            <th class="texto">Texto</th>
-            <th class="eliminar">Eliminar</th>
+            <tr>
+                <th><h4>Comentarios:</h4></th>
+            </tr>
         </thead>
         <tbody>
             {% for com in entity.comentarios %}
             <tr>
-                <td>{{com.creador|default('value')}}</td>
-                <td>{{com.fechaHora|date('d-m-Y H:i:s')}}</td>
-                <td>{{com.texto}}</td>
                 <td>
-                    <form method="POST" action="{{ path('actas_comentarios_delete', { 'id': com.id }) }}">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        {{ form_widget(com_delete_forms[loop.index0]) }}
-                        <input type="hidden" value="{{ entity.id }}" name="actaId"/>
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Esta seguro que desea borrar el comentario?')">x</button>
-                    </form>
+                    <div class="btnEliminarComentario">
+                        <form method="POST" action="{{ path('actas_comentarios_delete', { 'id': com.id }) }}">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            {{ form_widget(com_delete_forms[loop.index0]) }}
+                            <input type="hidden" value="{{ entity.id }}" name="actaId"/>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Esta seguro que desea borrar el comentario?')">x</button>
+                        </form>
+                    </div>
+                    <div class="comentarioBox">
+                        <span class="creador"><strong> {{com.creador|default('value')}}</strong> </span>
+                        <span>{{com.texto}}</span>
+                        <br>
+                        <span class="fechaHora">{{com.fechaHora|date('d-m-Y')}} a las {{com.fechaHora|date('H:i:s')}}</span>
+                    </div>
                 </td>
             </tr>
             {% endfor %}

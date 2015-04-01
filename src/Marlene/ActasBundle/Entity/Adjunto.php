@@ -49,6 +49,11 @@ class Adjunto
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Actas", inversedBy="adjuntos")
+     **/
+    private $acta;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -115,6 +120,29 @@ class Adjunto
         $this->path = $path;
 
         return $this;
+    }
+
+    /**
+     * Set acta
+     *
+     * @param Marlene\ActasBundle\Entity\Actas $acta
+     * @return Marlene\ActasBundle\Entity\Actas 
+     */
+    public function setActa( \Marlene\ActasBundle\Entity\Actas $acta)
+    { 
+        $this->acta = $acta;
+
+        return $this;
+    }
+
+    /**
+     * Get acta
+     *
+     * @return Marlene\ActasBundle\Entity\Actas 
+     */
+    public function getActa()
+    {
+        return $this->acta;
     }
 
     /**

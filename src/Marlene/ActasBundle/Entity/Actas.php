@@ -73,11 +73,8 @@ class Actas
     private $comentarios;
 
      /**
-     * @ORM\ManyToMany(targetEntity="Adjunto")
-     * @ORM\JoinTable(name="actas_adjuntos",
-     *      joinColumns={@ORM\JoinColumn(name="acta_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="adjunto_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="Adjunto", mappedBy="acta")
+     *
      *@ORM\OrderBy({"nombre" = "asc"})
      **/
     private $adjuntos;
@@ -112,7 +109,10 @@ class Actas
         $this->adjuntos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
+    public function __toString()
+    {
+        return "Acta Numero: ".$this->id;
+    }
     /**
      * Get id
      *

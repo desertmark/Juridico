@@ -53,6 +53,7 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>Extension</th>
+            <th>Acta</th>
             <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
         </tr>
     </thead>
@@ -62,6 +63,7 @@
             <td><a href="{{ path('documentos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.nombre }}</td>
             <td>{{ entity.extension }}</td>
+            <td>{{ entity.acta.id }}</td>
             <td><a href="{{asset(entity.path)}}">Descargar</a></td>
             <td>
                 <a class="btn btn-mini" href="{{ path('documentos_show', { 'id': entity.id }) }}">

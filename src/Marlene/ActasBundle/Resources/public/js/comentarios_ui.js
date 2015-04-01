@@ -1,29 +1,29 @@
 $(document).ready(function(){
-            i=0;
-            $('#btnComentar').click(function(){
-                
-                if(i==0){
-                    today = new Date();
-                    row ='<tr id="'+i+'">';  
-                    row +='<td><input id="creador'+i+'" type="text"/></td>';
-                    row +='<td><input id="fechaHora'+i+'" type="text" value="'+today.getDate()+'/'+(today.getMonth()+1) +'/'+today.getFullYear()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds() +'" disabled></td>';
-                    row +='<td><textarea id="texto'+i+'"></textarea></td>';
-                    row +='<td><button onclick="borrarFila('+i+')" class="btn btn-danger sup">X</button></td>';
-                    row +='</tr>'
-                    $('#divComentarios tbody').append(row);
-                    saveBtn = '<button id="saveCom" onclick="guardarComentario('+i+')" class="btn">Guardar comentario</button>';
-                    $('#divComentarios').append(saveBtn);
-                    i++;
-                }
-                else
-                {
-                    $('#texto0').focus();
-                }
-            });
+            
 
             
         });
 
+        
+        i=0;
+        function comentar(usuario){
+                
+            if(i==0){
+                row ='<tr id="'+i+'"><td>';  
+                row +='<input id="creador'+i+'" value="'+usuario+'"type="text" style="display: none" disabled/>';
+                row +='<textarea style="width:94%" id="texto'+i+'"></textarea>';
+                row +='<div class="btnEliminarComentario" ><button onclick="borrarFila('+i+')" class="btn btn-danger sup">x</button></div>';
+                row +='</td></tr>'
+                $('#divComentarios tbody').append(row);
+                saveBtn = '<button id="saveCom" onclick="guardarComentario('+i+')" class="btn">Guardar comentario</button><br><br>';
+                $('#btnComentar').before(saveBtn);
+                i++;
+            }
+            else
+            {
+                $('#texto0').focus();
+            }
+        }    
         function borrarFila(id)
         {
             if(confirm("Esta seguro que desea borrar el comentario?"))

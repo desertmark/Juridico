@@ -241,7 +241,7 @@ button:hover,input[type="button"]:hover
 	margin-left:7%;
 }
 /***Estilos de Actas show***/
-#divComentarios
+.Actas_Show_Tbl
 {
 	//background-color: red;
 	margin-right: auto;
@@ -249,13 +249,16 @@ button:hover,input[type="button"]:hover
 	margin-bottom: 15px;
 	width:80%;
 }
-th.creador,th.fechaHora
+.btnEliminarComentario
 {
-	width: 150px;
+	float:right;
 }
-th.eliminar
+.creador{color:#3b5998; font-size: 16px}
+.fechaHora{font-weight: bold; color: #aaa;}
+.comentarioBox
 {
-	width: 50px;
+	padding-left: 15px;
+	padding-top: 10px;
 }
 /***Estilos de Login***/
 .login
