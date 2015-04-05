@@ -1,0 +1,25 @@
+marlene_actas_homepage:
+    path:     /
+    defaults: { _controller: MarleneActasBundle:Default:index }
+marlene_actas_listadoActas:
+    path:     /default
+    defaults: { _controller: MarleneActasBundle:Default:listarActas }
+marlene_actas_crearActa:
+    path:     /default/crearActa
+    defaults: { _controller: MarleneActasBundle:Default:crearActa }
+
+cliente:
+    resource: "@MarleneActasBundle/Controller/"
+    type:     annotation
+
+actas:
+    resource: "@MarleneActasBundle/Controller/"
+    type:     annotation
+
+juzgado:
+    resource: "@MarleneActasBundle/Controller/"
+    type:     annotation
+
+abogado:
+    resource: "@MarleneActasBundle/Controller/"
+    type:     annotation

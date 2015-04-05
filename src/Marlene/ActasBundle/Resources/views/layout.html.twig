@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/layout.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}">
+		<link href="{{ asset('css/bootstrap.css') }}" 			 rel="stylesheet" type="text/css">
+		<link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css">
+		<link href="{{ asset('css/crud.css') }}" 	  		     rel="stylesheet" type="text/css">
+
+		<script src="{{ asset('js/jquery.min.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.js') }}"></script>
+
+
+
+		{% block css %}{% endblock %}
+		{% block javascript %}{% endblock %}
+	</head>
+	<body id="body">
+		<div id="BarraMenu">
+			<ul id="menu">
+				<li><a href="{{url('marlene_actas_homepage')}}">Inicio</a></li>
+				<li><a href="{{url('actas')}}">Actas</a></li>
+				<li >
+					<a href="">Agenda</a>
+					<ul>
+						<li><a href="{{url('cliente')}}">Clientes</a></li>
+						<li><a href="{{url('abogado')}}">Abogados</a></li>
+						<li><a href="{{url('juzgado')}}">Juzgados</a></li>
+					</ul>
+				</li>
+				<li><a href="{{url('documentos')}}">Documentos</a></li>
+				<li><a href="{{path('fos_user_registration_register')}}">Crear usuario</a></li>
+	                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	                <div class="logout"> 
+	                	Usted ha ingresado como: {{ app.user }} - <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+	                </div>
+	                {% endif %}                
+			</ul>
+
+		</div>	
+		{% block body %}{% endblock %}
+		
+	</body>
+</html>

@@ -1,0 +1,24 @@
+Marlene\ActasBundle\Entity\Abogado:
+    properties:
+        cUIT:
+            - Range:
+                min: 10000000000
+                max: 99999999999
+                minMessage: El cuit ser mayor a {{ limit }}
+                maxMessage: El cuit debe ser menor a {{ limit }}
+Marlene\ActasBundle\Entity\Abogado:
+    properties:
+        telefono:
+            - Range:
+                min: 100000
+                max: 9999999999999
+                minMessage: El telefono debe ser un numero de 6 digitos
+                maxMessage: El cuit debe ser menor a un numero de 13 digitos
+Marlene\ActasBundle\Entity\Cliente:
+    properties:
+        telefono:
+            - Range:
+                min: 100000
+                max: 9999999999999
+                minMessage: El telefono debe ser un numero de 6 digitos
+                maxMessage: El cuit debe ser menor a un numero de 13 digitos

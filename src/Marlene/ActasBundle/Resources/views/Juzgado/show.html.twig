@@ -1,0 +1,52 @@
+{% extends 'MarleneActasBundle::jordilayout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - {{ 'views.show.show'|trans({'%entity%': 'Juzgado'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block page %}
+
+<h1>Juzgado</h1>
+
+<form class="form-horizontal">
+    <fieldset>        <div class="control-group">
+            <label class="control-label">Id</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Numero</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.numero }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Direccion</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.direccion }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Ciudad</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.ciudad }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Provincia</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.provincia }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Rama</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.rama }}</span>            </div>
+        </div>    </fieldset>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('juzgado') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <a class="btn btn-primary" href="{{ path('juzgado_edit', { 'id': entity.id }) }}">
+            {{ 'views.recordactions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <form action="{{ path('juzgado_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

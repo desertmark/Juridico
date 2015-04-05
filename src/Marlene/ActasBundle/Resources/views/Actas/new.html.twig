@@ -1,0 +1,65 @@
+{% extends 'MarleneActasBundle::jordilayout.html.twig'%}
+
+{% block title %}
+{{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': 'Actas'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('js/actas_new_form.js') }}"></script>
+{% endblock %}
+
+
+{% block page %}
+<h1>{{ 'views.new.creation'|trans({'%entity%': 'Actas'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+
+<form class="well" action="{{ path('actas_create') }}" method="post" {{ form_enctype(form) }}>
+
+	<input type="checkbox" id="nuevoCli" checked> <span class="checkLbl">Cliente Nuevo?</span><br><br>
+	<div id="clienteForm">
+		<p class="subtitulo">Cliente: </p>
+		<div class="seccionForm">
+			{{ form_widget(formCli) }}
+		</div>
+		<hr class="hr">
+	</div>
+
+	<input type="checkbox" id="nuevoAbogadoCp" checked> <span class="checkLbl">Abogado de la contraparte Nuevo?</span><br><br>
+	<div id="abogadoContraparteForm">
+		<p class="subtitulo">Abogado Contraparte: </p><br><br>
+		<div class="seccionForm">
+			{{ form_widget(formAb) }}
+		</div>
+		<hr class="hr">
+	</div>
+	
+	<p class="subtitulo">Acta: </p>
+	<div class="seccionForm">
+		
+		{{ form_label(form.cliente, 'Cliente', {'label_attr': {'id': 'clienteLbl'}}) }}
+		{{ form_widget(form.cliente)}}
+
+		{{ form_row(form.cliente)}}
+		
+		{{ form_row(form.actuacion)}}
+
+		{{ form_label(form.abogadoContraparte, 'Abogado Contraparte', {'label_attr': {'id': 'abogadoCpLbl'}}) }}
+		{{ form_widget(form.abogadoContraparte)}}
+
+
+	    {{ form_widget(form) }}
+	    <p>
+	    	<button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+	    </p>
+	</div>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('actas') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+</div>
+
+
+{% endblock %}
